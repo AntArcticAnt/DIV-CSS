@@ -20,18 +20,14 @@
 
 >  呵呵哒( 引用)
 
-[百度](http://www.baidu.com)       插入网址
-![百度logo](http://www.baidu.com)  插入图片
+[google](http://www.baidu.com)       插入网址
+![flicker](http://www.baidu.com)  插入图片
 
-啊就会**收到贺卡**上的
-还是到*家啦就*算了的
-觉得垃***圾啊数***量巨大
 |Col1|Col2|Col3|
 |---|---|---|
 |aaa|bbb|ccc|
 
-
-这是一行代码:苏打水`<script>`实打实地
+这是一行代码:`<script>`
 
 
 
