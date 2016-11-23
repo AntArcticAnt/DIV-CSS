@@ -1,0 +1,1103 @@
+/*
+原型设计:工具:纸和笔/mockups3/Axure/Sketch/
+交互设计:Flinto
+*/
+/*简单的默认样式的修改*/
+/************
+*页面样式---基本默认值---工具样式
+*************/
+
+/*  =================
+        基本默认值
+    ================*/
+
+/*
+navigator.userAgent
+chrome:shift+上下箭头  (10个刻度调整)   上下箭头(1个刻度调整)
+媒体查询的放置位置很重要!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+*/
+
+html {
+
+    font-size: 62.5%;
+
+    /*
+        px是固定单位(1px相当于1像素) ,
+        em是相对的长度单位(参考对象为父元素的font-size,会一直往上找,默认1em=16px;),em缺点:来回参照,容易混乱
+        rem的相对参照物为根元素的html,相对参照固定不变,所以比较好计算,默认为1rem=16px (比em更加安全,方便>>好像可兰经)
+            所以推荐用rem: //IE8一下的不支持rem
+                当font-size:62.5% 1rem=10px (10/16*100%)
+                当font-size:100%  1rem=16px
+    */
+    color: #222;
+
+}
+
+::selection {
+    /*css3新特性:选中文字的样式效果*/
+    background-color: #ff0000;
+    text-shadow: none;
+    /*鼠标左键选中文字的色彩效果*/
+}
+
+ul {
+    /*管理队伍*/
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    /*规范成员*/
+    list-style: none;
+    /*li特有样式*/
+}
+
+/*========
+   工具样式
+  ========*/
+
+.center-block {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    /*任何元素加上.center-block,就会居中显示*/
+}
+
+.pull-right {
+    float: right !important;
+    /*任何元素加上.pull-right,就会靠右显示*/
+    /*!important 优先级就会优于其他的class,class之王 */
+}
+
+.pull-left {
+    float: left !important;
+}
+
+.text-right {
+    text-align: right !important;
+}
+
+.text-left {
+    text-align: left !important;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+.hide {
+    display: none !important;
+}
+
+.show {
+    display: block !important;
+}
+
+.invisible {
+    visibility: hidden;
+    /*被隐藏的元素空间不被挤占,挤压*/
+}
+
+.text-hide {
+    font: 0/0 a;
+    color: transparent;
+    text-shadow: none;
+    background-color: transparent;
+    border: 0;
+    /*可能为了SEO*/
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+}
+
+/*.clearfix:before:浏览器顶部的空白崩溃(防止上下margin叠加)*/
+.clearfix:after {
+    clear: both;
+}
+
+/*
+     关于浮动:
+             0.FLEX布局替代float (就是点你一下,其实不讲)
+第一种清浮动 1. 在父元素class="container"的末尾上添加一个空的标签  <div style="clear:both"></div> (太多了就是维护噩梦)
+第二种清浮动 2. 让父元素.container{overflow:auto; ...}添加属性overflow:auto,overflow:hidden都可以(因为让浮动元素回到容器中);
+第三种清浮动 3. 让父元素也浮动(影响布局-不推荐使用)
+第四种伪元素 4.  .clearfix (类似于第一种方法,但是没有多余的标签)  .clearfix{zoom:1;()}
+
+
+                .clearfix:after{
+                    content:" ";
+                    display: block;
+                    height:0;
+                    clear:both;  //除了clear :both,其他的样式目的都是为了隐藏元素;
+                    visibility:hidden;
+                }
+
+                .clearfix{ //为了兼容IE6,7 ,触发ie的haslayout
+                    zoom:1;
+                }
+
+BFC概念:块级格式化上下文 (只要触发了BFC就会清除浮动) >>> block formatting context
+        只要触发了BFC就会清除浮动
+display,overflow,float会触发BFC;
+不能清浮动的样式-取值+能触发BFC的样式取值();
+position:(fixed,absolute);
+display:(table-cell;table-caption,inline-block);
+overflow:-visible;
+float:-none;
+*/
+
+/* if lte IE*/
+.browserupgrade {
+    margin: 0;
+    padding: 1rem;
+    background: #ccc;
+}
+
+/*自定义页面样式*/
+body {
+
+    font-size: 1.2rem; /*相当于12px*/
+
+    line-height: 1.5; /*相当于1.5倍行间距*/
+
+    background-color: #f7f7f7;
+
+}
+
+a {
+
+    color: #666;
+
+    text-decoration: none;
+
+}
+
+a:hover, a:active {
+    color: #0ae;
+    text-decoration: underline;
+}
+
+/*网站头部:在写html的时候,就应该先把元素列出来,再写样式*/
+header {
+
+    width: 100%; /*为什么设置成比例100%? 因为不论怎么响应大小,头部尾部比例不变*/
+}
+
+header .top {
+
+    line-height: 3rem; /*chrome下有最小数值:所以3rem在chrome下是36px*/
+
+    padding: 0 1.5rem;
+
+    color: #fff;
+
+    background: #555;
+
+    border-bottom: 1px #ecc000 solid;
+
+}
+
+header .top .tel {
+
+    float: left;
+
+}
+
+header .top ul {
+
+    text-align: right;
+
+}
+
+header .top ul li {
+
+    display: inline-block;
+}
+
+header .top ul li + li { /*中间有边线两边没有,我前边有人,不包含列表里面的第一个元素*/
+
+    border-left: 1px solid #999;
+
+    margin-left: -3px; /*为什么这样设置: (inline-block下换行符出现空格字符)去除html换行符(js中的文本元素),空白字符*/
+
+}
+
+header .top ul li a {
+
+    display: inline-block; /*a默认是inline,所以不设置inline-block没法设置padding这些样式*/
+
+    padding: 0 1.5rem;
+
+    color: #fff;
+
+}
+
+/*小坑:px和rem在媒体查询时候的关系1rem=16px;   800/16 ,480/16*/
+/*rem在浏览器上还有bug,改成em也是一样的*/
+
+@media only screen and (max-width: 50em) {
+    header .top ul li a {
+        padding: 0 1rem;
+    }
+}
+
+@media only screen and (min-width: 30.0625em) and (max-width: 50em) {
+    header .top ul li a {
+        color: red;
+    }
+}
+
+@media only screen and (max-width: 30.0625em) {
+    header .top .tel,
+    header .top ul li:nth-child(3),
+    header .top ul li:nth-child(4) {
+        display: none;
+    }
+}
+
+header .main {
+    padding: 0;
+}
+
+header .main .brand {
+
+    float: left;
+
+    padding: 1rem 1.5rem 1rem 0;
+
+}
+
+header .main ul {
+
+    text-align: right;
+
+}
+
+header .main ul li {
+
+    display: inline-block;
+
+    border-left: 1px solid #f0ede9;
+
+}
+
+header .main ul li a {
+
+    display: inline-block;
+
+    padding: 0 3rem;
+
+    line-height: 5.5rem;
+
+    font-size: 1.6rem;
+
+    font-weight: bold;
+
+    color: #7c7a65;
+
+}
+
+header .main ul li a:hover,
+header .main ul li a:active {
+
+    color: #ffb300;
+    background-color: #f8f6f1;
+}
+
+@media only screen and (max-width: 50em) {
+    header .main .brand {
+        float: none;
+        display: block;
+        padding: 0;
+        margin: 1.5rem auto 0.5rem;
+        text-align: center;
+    }
+
+    header .main ul {
+        text-align: center;
+    }
+
+    header .main ul li {
+        border: none;
+    }
+
+    header .main ul li a {
+        padding: 0 1.5rem;
+    }
+}
+
+@media only screen and (max-width: 30em) {
+    header .main ul li {
+        line-height: 3rem;
+    }
+
+    header .main ul li:first-child {
+        display: none;
+    }
+
+    header .main ul li a {
+        font-weight: normal;
+        padding: 0 0.5rem;
+    }
+
+}
+
+/*网站的主要内容*/
+
+.container {
+
+    width: 100%;
+}
+
+/*交易信息*/
+.transaction {
+
+    width: 100%;
+
+    background-color: #7c7365;
+
+}
+
+.trans-content {
+
+    max-width: 90%;
+
+    margin: 0 auto;
+
+    font-size: 1.6rem;
+}
+
+.trans-data {
+
+    float: left;
+
+    padding: 1rem;
+
+    text-align: left;
+
+}
+
+.trans-data span {
+
+    display: inline-block;
+
+    line-height: 3rem;
+
+    color: #fff;
+
+}
+
+.trans-data span.trans-money {
+
+    font-size: 2.2rem;
+
+    color: #ff9900;
+
+    letter-spacing: 3px;
+
+    margin: 0 1rem;
+
+    padding: 0 1rem;
+
+    border-radius: 3px;
+
+    background-color: rgba(255, 255, 255, 0.7);
+
+    /*rgba不改变文字的透明度*/
+    box-shadow: 1px 2px 1px #333 inset;
+
+    /*
+      水平阴影的厚度(负数为下,正数为上侧)
+      垂直阴影的厚度(负数为右侧,正数为左侧(左派政治正确))
+      再往外虚化多少px (只能取正数)
+      阴影的颜色
+      内阴影(默认外阴影)
+     */
+
+}
+
+.trans-report {
+
+    text-align: right;
+}
+
+.trans-report a {
+
+    display: inline-block;
+
+    padding: 1rem;
+
+    line-height: 3rem;
+
+    color: #fff;
+}
+
+@media only screen and (max-width: 50em) {
+    .trans-data {
+        padding: 1rem 0.5rem;
+    }
+
+    .trans-data span {
+        font-size: 1.2rem;
+    }
+
+    .trans-data span.trans-money {
+        font-size: 1.6rem;
+        margin: 0;
+        padding: 0;
+        letter-spacing: inherit;
+        box-shadow: none;
+        background: transparent;
+    }
+
+    .trans-report a {
+        font-size: 1.2rem;
+
+    }
+}
+
+@media only screen and (max-width: 30em) {
+    .transaction {
+        padding: 0.5rem 0;
+    }
+
+    .trans-data, .trans-report {
+        float: none;
+        text-align: center;
+    }
+
+    .trans-data, .trans-report {
+        float: none;
+        text-align: center;
+    }
+
+    .trans-data, .trans-report a {
+        padding: 0;
+
+    }
+}
+
+/*滚动广告*/
+
+.ad {
+    display: none;
+}
+
+/*公告的内容*/
+.feature {
+
+    width: 90%;
+
+    margin: 2rem auto;
+
+    font-size: 0;
+
+}
+
+.feature .item {
+    /*
+这块需要精确计算:
+          需要减掉item之间的margin-left总和（1.5rem*2/3=1rem)、3个item的左右border宽度和（2px*2*3），
+
+          或者item使用 box-sizing: border-box; 就不需要减掉padding
+
+    */
+
+    display: inline-block;
+    /*width: calc(33.33333333% - 3rem); !*css3的计算方法:(33.33333333%-3rem)报错了,因为少了空格,(33.33333333% - 3rem)是正确的*!*/
+    width: calc((100% - 9rem) / 3);
+
+    padding: 1rem;
+
+    font-size: 1.4rem;
+
+    background-color: #fff;
+
+    box-shadow: 1px 2px 4px #ccc;
+
+}
+
+.feature .item + .item {
+
+    margin-left: 1.5rem;
+
+}
+
+.feature .item h3 {
+
+    display: inline-block;
+
+    width: 40%;
+
+    margin: 0;
+
+    padding: 0;
+
+    vertical-align: top;
+    /*MVP
+        margin:0;
+        vertical-align:top;
+        padding:0;
+    */
+    font-size: 3.3rem;
+
+    text-align: center;
+
+    color: #ff9900;
+
+}
+
+.feature .item p {
+
+    display: inline-block;
+
+    width: 55%;
+
+    margin: 0;
+
+    color: #999999;
+
+}
+
+@media only screen and (min-width: 30.0625em) and (max-width: 50em) {
+    .feature .item h3,
+    .feature .item p {
+        display: block;
+        width: 100%;
+        font-size: 2.6rem;
+        text-align: center;
+
+    }
+
+    .feature .item p {
+        font-size: 1.2rem;
+    }
+}
+
+@media only screen and (max-width: 30rem) {
+
+    .feature {
+        width: 96%;
+        margin: 1rem auto;
+    }
+
+    .feature .item {
+        display: block;
+        width: auto;
+    }
+
+    .feature .item + .item {
+        margin: 1rem 0 0;
+    }
+}
+
+/*最新公告*/
+
+.notice {
+
+    width: 90%;
+
+    margin: 2rem auto;
+
+    font-size: 1.4rem;
+
+    line-height: 3rem;
+
+    background-color: #fff;
+
+    box-shadow: 0 0 4px #ccc;
+
+}
+
+.notice a {
+    float: left;
+
+    display: inline-block;
+
+    width: 70%;
+
+    margin-left: 2rem;
+
+    text-decoration: none;
+
+}
+
+.notice a:first-child {
+
+    text-overflow: ellipsis;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    /*让文字不换行,太长了还有省略号*/
+}
+
+.notice a:first-child:before {
+    /*伪元素添加字符和空格*/
+    content: "最新公告:\00a0\00a0";
+
+    color: #aaa;
+}
+
+.notice a span {
+
+    color: #999;
+
+    font-size: 1.2rem;
+
+    margin-right: 1rem;
+
+}
+
+.notice a.more {
+
+    float: right;
+
+    width: auto;
+
+    margin-right: 2rem;
+
+    color: #ff9900;
+
+}
+
+@media only screen and (max-width: 30em) {
+    .notice {
+        width: 96%;
+        margin: 1rem auto;
+        font-size: 1.2rem;
+    }
+
+    .notice a {
+        margin-left: 1rem;
+    }
+
+    .notice a span {
+        display: none;
+    }
+}
+
+/*product*/
+.product {
+
+    width: 90%;
+
+    margin: 2rem auto;
+
+    font-size: 1.4rem;
+
+    background-color: #f5f9fa;
+
+    border-top: 2px solid #ff9900;
+
+    box-shadow: 0 0 4px #ccc;
+
+}
+
+.product h2 {
+
+    float: left;
+    width: 20%;
+
+    margin-top: 3rem;
+
+    text-align: center;
+
+    font-size: 2.4rem;
+
+    font-weight: normal;
+
+    color: #635c51;
+
+}
+
+.product h2 em {
+    display: block;
+
+    margin-top: 1rem;
+
+    font-size: 1.6rem;
+
+
+}
+
+.product h2 em:first-child {
+    margin-top: 4rem;
+
+
+}
+
+.product .product-content {
+
+    float: right;
+
+    width: 79.5%;
+
+    border-left: 1px solid #eee;
+
+    background-color: #fff;
+
+}
+
+.product .product-content .item {
+    width: 100%;
+
+}
+
+.product .product-content .item + .item {
+
+    border-top: 1px solid #eee;
+}
+
+.product .product-content .item h3 {
+
+    float: left;
+
+    width: 30%;
+
+    margin: 1.5rem 0;
+
+    font-size: 1.4rem;
+
+    font-weight: normal;
+
+    text-align: center;
+
+}
+
+.product .product-content .item h3 em {
+    margin-right: 0.5rem;
+
+    font-size: 3.6rem;
+
+    font-style: normal;
+
+    color: #8b999d;
+
+}
+
+.product .product-content .item h3 i {
+
+    display: block;
+
+    font-size: 1.2rem;
+
+    font-style: normal;
+
+    color: #999;
+
+}
+
+.product .product-content .item .info {
+
+    float: left;
+
+    width: 48%;
+
+    padding: 1rem;
+
+    border-left: 1px solid #eee;
+
+    border-right: 1px solid #eee;
+
+    font-size: 14px;
+
+}
+
+.product .product-content .item .info p {
+    float: left;
+
+    display: inline-block;
+
+    text-align: center;
+
+    width: 56%;
+
+}
+
+.product .product-content .item .info p:last-child {
+    width: 40%;
+}
+
+.product .product-content .item .info p span {
+    display: block;
+    font-size: 2.4rem;
+    color: #ff9900;
+
+}
+
+.product .product-content .item .info p span i {
+    font-size: 1.2rem;
+    font-style: normal;
+    color: #999;
+}
+
+.product .product-content .item .buy {
+    float: left;
+    width: calc(22% - 4.4rem);
+    padding: 1rem;
+}
+
+.product .product-content .item .buy a {
+    display: block;
+    width: 90%;
+    margin: 1.5rem auto;
+    max-width: 12rem;
+    line-height: 4rem;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: #ff9900;
+    border-radius: 5px;
+}
+
+.product .product-content .item .buy a:hover,
+.product .product-content .item .buy a:active {
+    background-color: #ffc468;
+}
+
+.product .product-content .item .buy a.disabled {
+    background-color: #ccc !important;
+    cursor: not-allowed;
+}
+
+@media only screen and (max-width: 50em) {
+    .product h2 {
+        float: none;
+        width: 100%;
+        margin-top: 2rem;
+        font-size: 2.2rem;
+    }
+
+    .product h2 em:first-child {
+        margin-top: 0;
+    }
+
+    .product h2 em {
+        display: inline;
+        font-size: 1.2rem;
+    }
+
+    .product .product-content {
+        float: none;
+        width: 100%;
+
+    }
+
+    .product .product-content .item h3 {
+        margin-bottom: 0;
+    }
+
+    .product .product-content .item h3 em {
+        font-size: 2.4rem;
+
+    }
+
+    .product .product-content .item .info {
+        padding: 1rem 1rem 0;
+        font-size: 1.2rem;
+    }
+
+    .product .product-content .item .info p span {
+        font-size: 2rem;
+    }
+
+    .product .product-content .item .buy a {
+        margin: 0.5rem auto;
+    }
+
+}
+
+@media only screen and (max-width: 30em) {
+    .product h2 em:first-child:before {
+        content: "";
+        display: table;
+    }
+
+    .product .product-content .item .info {
+        float: right;
+        width: 70%;
+        padding: 1rem 0;
+        border: none;
+    }
+
+    .product .product-content .item .info p span {
+        font-size: 1.8rem;
+    }
+
+    .product .product-content .item .buy {
+        clear: both;
+        float: none;
+        width: 100%;
+        padding: 1rem 0 2rem;
+
+    }
+
+    .product .product-content .item .buy .a {
+        margin-top: 0;
+        max-width: 26rem;
+    }
+}
+
+/*底部导航*/
+.footer {
+    padding: 3rem 0;
+    background-color: #fff;
+    border-top: 2px solid #eee;
+}
+
+.footer-content {
+    width: 90%;
+    margin: 0 auto;
+
+}
+
+.footer-content .brand {
+    float: left;
+    display: block;
+    filter: grayscale(100%);
+    -webkit-filter:grayscale(100%);
+    width: 20%;
+    height: 35px;
+    background: url("../img/logo@1x.png") no-repeat left;
+    background-size: 150px 35px;
+}
+
+.footer-content ul {
+    float: left;
+    width: 15%;
+}
+
+.footer-content ul li {
+    font-size: 1.4rem;
+    line-height: 2.4rem;
+}
+
+.footer-content ul li.title {
+    font-size: 1.6rem;
+    line-height: 3rem;
+}
+
+/*底部边栏*/
+
+footer {
+    width: 100%;
+    padding: 3rem 0 5rem;
+    /*有上,下的padding空间*/
+    background-color: #ededed;
+}
+
+footer ul {
+    text-align: center;
+}
+
+footer ul li {
+    display: inline-block;
+}
+
+footer ul li .icon {
+
+    display: inline-block;
+    text-indent: -999rem;
+    /*把图片扯远点*/
+    margin-right: 1.5rem;
+    /*margin-right是让下面的背景图能够显示出margin*/
+    background-image: url('../img/cert1.png'); /*!!!地址又写错了*/
+    background-repeat: no-repeat;
+    background-size: 466px 447px;
+    overflow: hidden;
+}
+
+/*雪碧图*/
+
+/*宽，高，位置bgp   */
+footer ul li .icon-pay {
+
+    width: 38px;
+    height: 27px;
+    /*画出图片形状*/
+    background-position: -369px -45px;
+}
+
+footer ul li .icon-pci {
+
+    width: 78px;
+    height: 27px;
+    background-position: -110px -96px;
+}
+
+footer ul li .icon-visa {
+
+    width: 36px;
+    height: 27px;
+    background-position: -426px -90px;
+}
+
+footer ul li .icon-net {
+    width: 63px;
+    height: 27px;
+    background-position: -401px -186px;
+}
+
+footer ul li .icon-web {
+    width: 78px;
+    height: 27px;
+    background-position: -110px -96px;
+}
+
+footer ul li .icon-rzcx {
+    width: 75px;
+    height: 27px;
+    background-position: 0 -320px;
+}
+
+footer ul li .icon-bjgs {
+    width: 30px;
+    height: 30px;
+    margin-right: 0;
+    background-size: 30px;
+    background-image: url('../img/cert2.png');
+}
+
+footer p {
+    text-align: center;
+    color: #999;
+    font-size: 1rem;
+
+}
+
+@media only screen and (max-width: 50em) {
+    .footer-content .brand {
+        display: none;
+    }
+
+    .footer-content ul {
+        width: 20%;
+    }
+
+    .footer-content ul li {
+        font-size: 1.2rem;
+        line-height: 2rem;
+    }
+
+    .footer-content ul li.title {
+        font-size: 1.4rem;
+        line-height: 2.5rem;
+    }
+}
+
+@media only screen and (max-width: 30em) {
+    .footer-content {
+        width: 98%;
+    }
+
+    .footer-content ul li .title {
+        font-size: 1.2rem;
+        line-height: 2rem;
+    }
+
+}
